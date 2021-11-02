@@ -60,7 +60,7 @@ limit 5;
 select
 distinct(k_symbol)
 from bank.order
-where k_symbol IS NOT NULL
+where k_symbol <> ""    # to remove the empty line
 order by k_symbol asc;
 
 # Query 9
@@ -104,7 +104,7 @@ count(client_id)
 from bank.client
 where district_id<10
 group by district_id
-order by district_id asc;
+order by district_id;
 
 # Query 14
 # In the card table, how many cards exist for each type? Rank the result starting with the most frequent type.
