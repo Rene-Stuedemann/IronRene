@@ -2,9 +2,9 @@
 select
 sa.first_name,
 sa.last_name,
-count(film_id) as Films
+count(sf.film_id) as Films
 from sakila.film_actor as sf
-left join sakila.actor as sa on sf.actor_id = sa.actor_id
+join sakila.actor as sa on sf.actor_id = sa.actor_id
 group by sf.actor_id
 order by Films desc
 limit 1
@@ -16,7 +16,7 @@ sc.first_name,
 sc.last_name,
 count(sr.rental_id) as rented_films
 from sakila.customer as sc
-left join sakila.rental as sr on sc.customer_id = sr.customer_id
+join sakila.rental as sr on sc.customer_id = sr.customer_id
 where sc.active=1
 group by sc.customer_id
 order by rented_films desc
@@ -28,9 +28,8 @@ select
 sc.name as category,
 count(sf.film_id) as films
 from sakila.film as sf
-left join sakila.film_category as sfc
-on sf.film_id = sfc.film_id
-left join sakila.category as sc on sfc.category_id = sc.category_id
+join sakila.film_category as sfc on sf.film_id = sfc.film_id
+join sakila.category as sc on sfc.category_id = sc.category_id
 group by category
 order by films desc
 ;
@@ -42,7 +41,7 @@ ss.last_name,
 sa.address,
 sa.district
 from sakila.staff as ss
-left join sakila.address as sa on ss.address_id = sa.address_id
+join sakila.address as sa on ss.address_id = sa.address_id
 ;
 
 # 5. Display the total amount rung up by each staff member in August of 2005.
@@ -51,7 +50,7 @@ ss.first_name,
 ss.last_name,
 round(sum(sp.amount)) as total_amount
 from sakila.payment as sp
-left join sakila.staff as ss on sp.staff_id = ss.staff_id
+join sakila.staff as ss on sp.staff_id = ss.staff_id
 where sp.payment_date like ("2005-08%")
 group by sp.staff_id
 order by total_amount desc
@@ -62,7 +61,7 @@ select
 sf.title as film,
 count(sfa.actor_id) as actors
 from sakila.film as sf
-left join sakila.film_actor as sfa on sf.film_id = sfa.film_id
+join sakila.film_actor as sfa on sf.film_id = sfa.film_id
 group by film
 order by actors desc
 ;
@@ -73,7 +72,7 @@ sc.first_name,
 sc.last_name,
 round(sum(sp.amount)) as total_amount
 from sakila.customer as sc
-left join sakila.payment as sp on sc.customer_id = sp.customer_id
+join sakila.payment as sp on sc.customer_id = sp.customer_id
 group by sc.customer_id
 order by sc.last_name
 ;
@@ -83,8 +82,8 @@ select
 title,
 count(rental_id) as times_rented
 from sakila.film as sf
-left join sakila.inventory as si on sf.film_id = si.film_id
-left join sakila.rental as sr on si.inventory_id = sr.inventory_id
+join sakila.inventory as si on sf.film_id = si.film_id
+join sakila.rental as sr on si.inventory_id = sr.inventory_id
 group by title
 order by times_rented desc
 limit 1

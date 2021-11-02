@@ -4,9 +4,9 @@ ss.store_id,
 sc.city,
 sco.country
 from sakila.store as ss
-left join sakila.address as sa on ss.address_id = sa.address_id
-left join sakila.city as sc on sa.city_id = sc.city_id
-left join sakila.country as sco on sc.country_id = sco.country_id
+join sakila.address as sa on ss.address_id = sa.address_id
+join sakila.city as sc on sa.city_id = sc.city_id
+join sakila.country as sco on sc.country_id = sco.country_id
 ;
 
 # 2. Write a query to display how much business, in dollars, each store brought in.
@@ -14,8 +14,8 @@ select
 sst.store_id,
 round(sum(sp.amount)) as total_amount
 from sakila.payment as sp
-left join sakila.staff as ss on sp.staff_id = ss.staff_id
-left join sakila.store as sst on ss.store_id = sst.store_id
+join sakila.staff as ss on sp.staff_id = ss.staff_id
+join sakila.store as sst on ss.store_id = sst.store_id
 group by sst.store_id
 order by total_amount desc
 ;
@@ -25,8 +25,8 @@ select
 sc.name as category,
 round(avg(sf.length)) as avg_running_time
 from sakila.film as sf
-left join sakila.film_category as sfc on sf.film_id = sfc.film_id
-left join sakila.category as sc on sfc.category_id = sc.category_id
+join sakila.film_category as sfc on sf.film_id = sfc.film_id
+join sakila.category as sc on sfc.category_id = sc.category_id
 group by category
 order by avg_running_time desc
 ;
@@ -36,8 +36,8 @@ select
 sc.name as category,
 round(sum(sf.length)) as total_running_time
 from sakila.film as sf
-left join sakila.film_category as sfc on sf.film_id = sfc.film_id
-left join sakila.category as sc on sfc.category_id = sc.category_id
+join sakila.film_category as sfc on sf.film_id = sfc.film_id
+join sakila.category as sc on sfc.category_id = sc.category_id
 group by category
 order by total_running_time desc
 ;
@@ -47,8 +47,8 @@ select
 sf.title,
 count(sr.rental_id) as top_rented
 from sakila.film as sf
-left join sakila.inventory as si on sf.film_id = si.film_id
-left join sakila.rental as sr on si.inventory_id = sr.inventory_id
+join sakila.inventory as si on sf.film_id = si.film_id
+join sakila.rental as sr on si.inventory_id = sr.inventory_id
 group by sf.title
 order by top_rented desc
 limit 10
@@ -59,11 +59,11 @@ select
 sc.name as category,
 round(sum(sp.amount)) as gross_revenue
 from sakila.film as sf
-left join sakila.film_category as sfc on sf.film_id = sfc.film_id
-left join sakila.category as sc on sfc.category_id = sc.category_id
-left join sakila.inventory as si on sf.film_id = si.film_id
-left join sakila.rental as sr on si.inventory_id = sr.inventory_id
-left join sakila.payment as sp on sr.rental_id = sp.rental_id
+join sakila.film_category as sfc on sf.film_id = sfc.film_id
+join sakila.category as sc on sfc.category_id = sc.category_id
+join sakila.inventory as si on sf.film_id = si.film_id
+join sakila.rental as sr on si.inventory_id = sr.inventory_id
+join sakila.payment as sp on sr.rental_id = sp.rental_id
 group by category
 order by gross_revenue desc
 limit 5
